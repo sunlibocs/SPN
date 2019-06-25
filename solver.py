@@ -218,7 +218,10 @@ class Solver(object):
     def to_var(self, x, volatile=False):
         if torch.cuda.is_available():
             x = x.cuda()
-        return Variable(x, volatile=volatile)
+        
+        #return Variable(x, volatile=volatile) 
+        #修改为 with torch.no_grad():
+        return Variable(x)
 
     def denorm(self, x):
         out = (x + 1) / 2
