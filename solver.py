@@ -16,6 +16,7 @@ from data_loader import PascalVOC2012
 class CrossEntropyLoss2d(nn.Module):
     def __init__(self, weight=None, size_average=True, ignore_index=255):
         super(CrossEntropyLoss2d, self).__init__()
+        #NLLLoss2d 错误，修改为NLLLoss
         self.nll_loss = nn.NLLLoss2d(weight, size_average, ignore_index)
 
     def forward(self, inputs, targets):
@@ -218,7 +219,6 @@ class Solver(object):
     def to_var(self, x, volatile=False):
         if torch.cuda.is_available():
             x = x.cuda()
-        
         #return Variable(x, volatile=volatile) 
         #修改为 with torch.no_grad():
         return Variable(x)
