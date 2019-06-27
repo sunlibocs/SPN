@@ -17,7 +17,7 @@ class CrossEntropyLoss2d(nn.Module):
     def __init__(self, weight=None, size_average=True, ignore_index=255):
         super(CrossEntropyLoss2d, self).__init__()
         #NLLLoss2d 错误，修改为NLLLoss
-        self.nll_loss = nn.NLLLoss2d(weight, size_average, ignore_index)
+        self.nll_loss = nn.NLLLoss(weight, size_average, ignore_index)
 
     def forward(self, inputs, targets):
         return self.nll_loss(F.log_softmax(inputs), targets)
@@ -130,7 +130,8 @@ class Solver(object):
                 #以下代码只是为了把模型记录下来
                 # Logging
                 loss = {}
-                loss['loss'] = softmax_ce_loss.data[0]
+                #data[0]remove [0]
+                loss['loss'] = softmax_ce_loss.data
 
                 # Print out log info
                 if (i+1) % self.log_step == 0:
